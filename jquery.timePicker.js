@@ -9,6 +9,7 @@
  * @example  $("#mytime").timePicker({step:30, startTime:"15:00", endTime:"18:00"});
  *
  * Based on timePicker by Sam Collet (http://www.texotela.co.uk/code/jquery/timepicker/)
+ * Modified from Anders' version by Peter McCracken
  *
  * Options:
  *   step: # of minutes to step the time by
@@ -16,6 +17,7 @@
  *   endTime: end of the range of acceptable times
  *   separator: separator string to use between hours and minutes (e.g. ':')
  *   show24Hours: use a 24-hour scheme
+ *   onSelect: a callback to execute when a new time is selected
  */
 
 (function($){
@@ -212,7 +214,8 @@
     startTime: new Date(0, 0, 0, 0, 0, 0),
     endTime: new Date(0, 0, 0, 23, 30, 0),
     separator: ':',
-    show24Hours: true
+    show24Hours: true,
+    onSelect: null
   };
 
   // Private functions.
@@ -222,6 +225,10 @@
     elm.value = $(sel).text();
     // Trigger element's change events.
     $(elm).change();
+    // execute user specified function
+    if (settings.onSelect) {
+      settings.onSelect();
+    }
     // Keep focus for all but IE (which doesn't like it)
     if (!$.browser.msie) {
       elm.focus();
