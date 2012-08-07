@@ -51,7 +51,7 @@
     var times = [];
     var time = new Date(startTime); // Create a new date object.
     while(time <= endTime) {
-      times[times.length] = formatTime(time, settings);
+      times[times.length] = time
       time = new Date(time.setMinutes(time.getMinutes() + settings.step));
     }
 
@@ -60,7 +60,8 @@
 
     // Build the list.
     for(var i = 0; i < times.length; i++) {
-      $tpList.append("<li>" + times[i] + "</li>");
+      var $li = $("<li>").text(formatTime(times[i], settings)).data('time', times[i]);
+      $tpList.append($li);
     }
     $tpDiv.append($tpList);
     // Append the timPicker to the body and position it.
